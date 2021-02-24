@@ -1,2 +1,2 @@
-# education-backend
-education back end
+# sme-education-backend
+sme-education back end
