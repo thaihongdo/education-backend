@@ -27,9 +27,10 @@ type UserRes struct {
 
 func toUserRes(user *models.User) *UserRes {
 	var userRes = &UserRes{
-		ID:    user.ID,
-		Email: user.Email,
-		Name:  user.Name,
+		ID:       user.ID,
+		Email:    user.Email,
+		Name:     user.Name,
+		UserRole: user.UserRole,
 	}
 	return userRes
 }
