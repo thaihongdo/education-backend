@@ -1,0 +1,11 @@
+[local]
+environment_prefix = "local"
+db_connection = "storage/api-golang-staging.db"
+allow_origins = ["http://localhost:3000"]
+server_port=7171
+
+[dev]
+environment_prefix = "dev"
+db_connection = "storage/api-golang-staging.db"
+allow_origins = [""]
+server_port=7171

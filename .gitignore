@@ -1,0 +1,4 @@
+.DS_Store
+.vscode
+cmd/entity-server/entity-server
+cmd/entity-server/storage/*.db
