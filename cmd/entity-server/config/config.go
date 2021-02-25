@@ -14,6 +14,7 @@ type Configuration struct {
 	EnvironmentPrefix string
 	DbConnection      string
 	AllowOrigins      []string
+	UploadedFilePath  string
 }
 
 func GetConfig() *Configuration {
@@ -37,6 +38,7 @@ func InitFromFile(filePathStr string, basePath string) {
 			EnvironmentPrefix: environmentPrefix,
 			DbConnection:      viper.GetString(env + ".db_connection"),
 			AllowOrigins:      viper.GetStringSlice(env + ".allow_origins"),
+			UploadedFilePath:  viper.GetString(env + ".uploaded_file_path"),
 		}
 		log.Println(viper.ConfigFileUsed())
 		log.Printf("Config %+v", *cf)

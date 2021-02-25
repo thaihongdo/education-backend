@@ -9,16 +9,18 @@ import (
 	"sme-education-backend/cmd/entity-server/models"
 )
 
-type User struct {
-	ID       uint
-	Email    string
-	Password string
-	Name     string
+type UserReq struct {
+	ID       uint   `json:"id"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
 }
 type UserRes struct {
 	ID        uint      `json:"id"`
 	Email     string    `json:"email"`
 	Name      string    `json:"name"`
+	Avatar    string    `json:"avatar"`
+	UserRole  string    `json:"user_role"`
 	Token     string    `json:"token"`
 	ExpiredAt time.Time `json:"expired_at"`
 }
@@ -32,7 +34,7 @@ func toUserRes(user *models.User) *UserRes {
 	return userRes
 }
 
-func (obj *User) Login() (*UserRes, error) {
+func (obj *UserReq) Login() (*UserRes, error) {
 	model := models.User{
 		Email: obj.Email,
 	}
@@ -46,7 +48,7 @@ func (obj *User) Login() (*UserRes, error) {
 	return toUserRes(user), nil
 }
 
-func (obj *User) Register() (bool, error) {
+func (obj *UserReq) Register() (bool, error) {
 	passHash, hashErr := utils.HashPassword(obj.Password)
 	if hashErr != nil {
 		return false, hashErr
@@ -65,4 +67,31 @@ func (obj *User) Register() (bool, error) {
 	} else {
 		return false, err
 	}
+}
+func (obj *UserReq) AddUser() (bool, error) {
+	passHash, hashErr := utils.HashPassword(obj.Password)
+	if hashErr != nil {
+		return false, hashErr
+	}
+	model := models.User{
+		Email:    obj.Email,
+		Password: passHash,
+		Name:     obj.Name,
+	}
+	_, err := model.Add()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+func (obj *UserReq) UpdateUser() (*UserRes, error) {
+	model := models.User{
+		Email: obj.Email,
+		Name:  obj.Name,
+	}
+	objRes, err := model.Update(obj.ID)
+	if err != nil {
+		return nil, err
+	}
+	return toUserRes(objRes), nil
 }

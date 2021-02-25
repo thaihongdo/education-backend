@@ -28,7 +28,7 @@ func Login(c *gin.Context) {
 	isValid := appG.BindAndValidate(&loginReq)
 
 	if isValid {
-		service := auth_service.User{Email: loginReq.Email, Password: loginReq.Password}
+		service := auth_service.UserReq{Email: loginReq.Email, Password: loginReq.Password}
 		user, err := service.Login()
 		if err != nil {
 			appG.Response(http.StatusUnauthorized, false, msg.GetMsg(msg.ERROR_AUTH_FAIL), nil, nil)
@@ -53,7 +53,7 @@ func Register(c *gin.Context) {
 	isValid := appG.BindAndValidate(&registerReq)
 
 	if isValid {
-		service := auth_service.User{Email: registerReq.Email, Password: registerReq.Password, Name: registerReq.Name}
+		service := auth_service.UserReq{Email: registerReq.Email, Password: registerReq.Password, Name: registerReq.Name}
 		isAdded, err := service.Register()
 		if err != nil {
 			appG.Response(http.StatusBadRequest, false, err.Error(), nil, nil)
