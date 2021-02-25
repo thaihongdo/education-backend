@@ -1,7 +1,7 @@
 #!/bin/sh
 
-export ENVIRONMENT_PREFIX="local"
-export SERVER_PORT="7171"
+export ENV="local"
+export PORT="7171"
 
 export CLIENT_URL="http://localhost:3000" 
 
