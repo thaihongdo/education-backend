@@ -11,7 +11,7 @@ type Attachment struct {
 
 	CreatedByUserID     uint `json:"created_by_user_id"`
 	CreatedByUser       User
-	UpdatedByUserID     uint `json:"created_by_user_id"`
+	UpdatedByUserID     uint `json:"updated_by_user_id"`
 	UpdatedByUser       User
 	StoragePrefix       string `json:"storage_prefix"`
 	ClientFileName      string `json:"client_file_name"`

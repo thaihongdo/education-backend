@@ -15,6 +15,7 @@ type User struct {
 	Password string `json:"password"`
 	Name     string `json:"name"`
 	UserRole string `json:"user_role"`
+	Phone    string `json:"phone"`
 }
 
 //Check email exist
