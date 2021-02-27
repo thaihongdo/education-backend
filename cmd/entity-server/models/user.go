@@ -11,11 +11,14 @@ import (
 
 type User struct {
 	gorm.Model
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Name     string `json:"name"`
-	UserRole string `json:"user_role"`
-	Phone    string `json:"phone"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
+	FullName  string `json:"full_name"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Avatar    string `json:"avatar"`
+	UserRole  string `json:"user_role"`
+	Phone     string `json:"phone"`
 }
 
 //Check email exist
@@ -67,7 +70,7 @@ func (obj *User) Register() (*User, error) {
 
 func (obj *User) GetEmail(email string) (*User, error) {
 	err := db.
-		Where("email = ? AND active = 1", email).First(&obj).Error
+		Where("email = ?", email).First(&obj).Error
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +83,25 @@ func (obj *User) FindOne(id uint) (*User, error) {
 	}
 	return obj, err
 }
+func (obj *User) GetAll(pageNum int, pageSize int) ([]*User, error) {
+	maps := make(map[string]interface{})
+	var list []*User
 
+	err := db.Debug().Where(maps).Offset(pageNum).Limit(pageSize).Find(&list).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return list, nil
+}
+
+func (obj *User) GetTotal() (int, error) {
+	maps := make(map[string]interface{})
+	var count int
+	if err := db.Model(&User{}).Where(maps).Count(&count).Error; err != nil {
+		return 0, err
+	}
+	return count, nil
+}
 func (obj *User) Add() (*User, error) {
 	if err := db.Create(&obj).Error; err != nil {
 		return nil, err
@@ -140,7 +161,7 @@ func (obj *User) UpdatePassword(id uint) (bool, error) {
 }
 func (obj *User) MigrateData() {
 	passHash, _ := utils.HashPassword("123456")
-	obj = &User{Model: gorm.Model{ID: 1}, Email: "admin@gmail.com", Password: passHash, Name: "Admin", UserRole: "Admin"}
+	obj = &User{Model: gorm.Model{ID: 1}, Email: "admin@gmail.com", Password: passHash, FullName: "Admin", UserRole: "Admin"}
 	if err := db.Unscoped().FirstOrCreate(obj).Error; err != nil {
 		log.Error("Migrate Data User Error ", err)
 	}

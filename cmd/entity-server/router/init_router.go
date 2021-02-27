@@ -13,5 +13,6 @@ func InitRouter(env string) *gin.Engine {
 	ApiGroup := Router.Group(urlPrefix)
 
 	initAuthRouter(ApiGroup)
+	initUserRouter(ApiGroup)
 	return Router
 }

@@ -15,6 +15,8 @@ type Configuration struct {
 	DbConnection      string
 	AllowOrigins      []string
 	UploadedFilePath  string
+	DefaultPageNum    int
+	DefaultPageLimit  int
 }
 
 func GetConfig() *Configuration {
@@ -39,6 +41,8 @@ func InitFromFile(filePathStr string, basePath string) {
 			DbConnection:      viper.GetString(env + ".db_connection"),
 			AllowOrigins:      viper.GetStringSlice(env + ".allow_origins"),
 			UploadedFilePath:  viper.GetString(env + ".uploaded_file_path"),
+			DefaultPageNum:    viper.GetInt(env + ".default_page_num"),
+			DefaultPageLimit:  viper.GetInt(env + ".default_page_limit"),
 		}
 		log.Println(viper.ConfigFileUsed())
 		log.Printf("Config %+v", *cf)
