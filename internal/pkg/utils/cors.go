@@ -5,13 +5,12 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"sme-education-backend/cmd/entity-server/config"
 )
 
 func Cors() gin.HandlerFunc {
 
 	return cors.New(cors.Config{
-		AllowOrigins:     config.GetConfig().AllowOrigins,
+		AllowAllOrigins:  true,
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Authorization", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
