@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"strings"
 	"time"
 
 	"sme-education-backend/internal/pkg/utils"
@@ -50,6 +51,9 @@ func (obj *UserReq) Login() (*UserRes, error) {
 }
 
 func (obj *UserReq) Register() (bool, error) {
+	if strings.TrimSpace(obj.Password) == "" {
+		return false, errors.New("Password không được để trống")
+	}
 	passHash, hashErr := utils.HashPassword(obj.Password)
 	if hashErr != nil {
 		return false, hashErr
@@ -61,7 +65,7 @@ func (obj *UserReq) Register() (bool, error) {
 	}
 	isExists, _ := model.IsEmailExist()
 	if isExists {
-		return false, errors.New("Email is not available!")
+		return false, errors.New("Email đã tồn tại")
 	}
 	if _, err := model.Register(); err == nil {
 		return true, err
