@@ -14,8 +14,11 @@ type User struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 	Name     string `json:"name"`
+	UserRole string `json:"user_role"`
+	Phone    string `json:"phone"`
 }
 
+//Check email exist
 func (obj *User) IsEmailExist() (bool, error) {
 	var tmpObj User
 	err := db.Where("email = ?", obj.Email).First(&tmpObj).Error
@@ -137,7 +140,7 @@ func (obj *User) UpdatePassword(id uint) (bool, error) {
 }
 func (obj *User) MigrateData() {
 	passHash, _ := utils.HashPassword("123456")
-	obj = &User{Model: gorm.Model{ID: 1}, Email: "admin@vmodev.com", Password: passHash, Name: "Admin"}
+	obj = &User{Model: gorm.Model{ID: 1}, Email: "admin@gmail.com", Password: passHash, Name: "Admin", UserRole: "Admin"}
 	if err := db.Unscoped().FirstOrCreate(obj).Error; err != nil {
 		log.Error("Migrate Data User Error ", err)
 	}

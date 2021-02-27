@@ -23,8 +23,8 @@ func main() {
 	//get port param
 	port := os.Getenv("PORT")
 	if port == "" {
-		os.Setenv("PORT", "8080")
-		port = "8080"
+		os.Setenv("PORT", "7171")
+		port = "7171"
 	}
 	log.Printf("Port set to ** %s **", port)
 
