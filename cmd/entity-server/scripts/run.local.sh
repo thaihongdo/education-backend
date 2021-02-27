@@ -3,9 +3,6 @@
 export ENV="local"
 export PORT="7171"
 
-export CLIENT_URL="http://localhost:3000" 
-
-
 
 echo "Setting env as $ENVIRONMENT_PREFIX\n"
 

@@ -17,6 +17,7 @@ type Configuration struct {
 	UploadedFilePath  string
 	DefaultPageNum    int
 	DefaultPageLimit  int
+	ClientURL         string
 }
 
 func GetConfig() *Configuration {
@@ -25,7 +26,7 @@ func GetConfig() *Configuration {
 
 func InitFromFile(filePathStr string, basePath string) {
 
-	env := os.Getenv("GO_ENV")
+	env := os.Getenv("ENV")
 
 	viper.SetConfigFile(filePathStr)
 	viper.AutomaticEnv()
@@ -43,6 +44,7 @@ func InitFromFile(filePathStr string, basePath string) {
 			UploadedFilePath:  viper.GetString(env + ".uploaded_file_path"),
 			DefaultPageNum:    viper.GetInt(env + ".default_page_num"),
 			DefaultPageLimit:  viper.GetInt(env + ".default_page_limit"),
+			ClientURL:         viper.GetString(env + ".client_url"),
 		}
 		log.Println(viper.ConfigFileUsed())
 		log.Printf("Config %+v", *cf)

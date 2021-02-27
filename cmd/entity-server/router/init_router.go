@@ -2,7 +2,6 @@ package router
 
 import (
 	"fmt"
-
 	"sme-education-backend/internal/pkg/utils"
 
 	"github.com/gin-gonic/gin"
