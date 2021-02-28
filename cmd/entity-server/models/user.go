@@ -87,7 +87,7 @@ func (obj *User) GetAll(pageNum int, pageSize int) ([]*User, error) {
 	maps := make(map[string]interface{})
 	var list []*User
 
-	err := db.Debug().Where(maps).Offset(pageNum).Limit(pageSize).Find(&list).Error
+	err := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&list).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, err
 	}
