@@ -84,10 +84,10 @@ func (obj *User) FindOne(id uint) (*User, error) {
 	return obj, err
 }
 func (obj *User) GetAll(pageNum int, pageSize int) ([]*User, error) {
-	maps := make(map[string]interface{})
+	// maps := make(map[string]interface{})
 	var list []*User
 
-	err := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&list).Error
+	err := db.Offset(pageNum).Limit(pageSize).Find(&list).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, err
 	}
@@ -95,9 +95,8 @@ func (obj *User) GetAll(pageNum int, pageSize int) ([]*User, error) {
 }
 
 func (obj *User) GetTotal() (int, error) {
-	maps := make(map[string]interface{})
 	var count int
-	if err := db.Model(&User{}).Where(maps).Count(&count).Error; err != nil {
+	if err := db.Model(&User{}).Count(&count).Error; err != nil {
 		return 0, err
 	}
 	return count, nil
