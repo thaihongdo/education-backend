@@ -160,7 +160,7 @@ func (obj *User) UpdatePassword(id uint) (bool, error) {
 }
 func (obj *User) MigrateData() {
 	passHash, _ := utils.HashPassword("123456")
-	obj = &User{Model: gorm.Model{ID: 1}, Email: "admin@gmail.com", Password: passHash, FullName: "Admin", UserRole: "Admin"}
+	obj = &User{Model: gorm.Model{ID: 1}, Email: "admin@gmail.com", Password: passHash, FullName: "Admin", UserRole: "admin"}
 	if err := db.Unscoped().FirstOrCreate(obj).Error; err != nil {
 		log.Error("Migrate Data User Error ", err)
 	}
