@@ -48,7 +48,7 @@ func (j *JWT) GenerateToken(Id uint, Email, Username string) (TokenInfo, error) 
 		Username,
 		jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
-			Issuer:    "Vmodev",
+			Issuer:    "Sme-education",
 		},
 	}
 	token, err := j.CreateToken(claims)

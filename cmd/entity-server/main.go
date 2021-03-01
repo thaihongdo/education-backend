@@ -14,9 +14,9 @@ import (
 
 func main() {
 	//get env param
-	env := os.Getenv("GO_ENV")
+	env := os.Getenv("ENV")
 	if env == "" {
-		os.Setenv("GO_ENV", "local")
+		os.Setenv("ENV", "local")
 		env = "local"
 	}
 	log.Printf("Env set to ** %s **", env)

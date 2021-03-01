@@ -16,9 +16,12 @@ type LoginReq struct {
 }
 
 type RegisterReq struct {
-	Email    string `json:"email" valid:"email~Email is not valid"`
-	Password string `json:"password" valid:"stringlength(6|50)~Password is at least 6 characters"`
-	Name     string `json:"name" valid:"required~Please enter name"`
+	Email     string `json:"email" valid:"email~Email is not valid"`
+	Password  string `json:"password" valid:"stringlength(6|50)~Password is at least 6 characters"`
+	FullName  string `json:"full_name"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Phone     string `json:"phone"`
 }
 
 func Login(c *gin.Context) {
@@ -36,7 +39,7 @@ func Login(c *gin.Context) {
 		}
 
 		j := utils.NewJWT()
-		tokenInfo, err := j.GenerateToken(user.ID, user.Email, user.Name)
+		tokenInfo, err := j.GenerateToken(user.ID, user.Email, user.FullName)
 		if err != nil {
 			appG.Response(http.StatusBadRequest, false, err.Error(), nil, nil)
 			return
@@ -53,7 +56,7 @@ func Register(c *gin.Context) {
 	isValid := appG.BindAndValidate(&registerReq)
 
 	if isValid {
-		service := auth_service.UserReq{Email: registerReq.Email, Password: registerReq.Password, Name: registerReq.Name}
+		service := auth_service.UserReq{Email: registerReq.Email, Password: registerReq.Password, FirstName: registerReq.FirstName, LastName: registerReq.LastName, Phone: registerReq.Phone}
 		isAdded, err := service.Register()
 		if err != nil {
 			appG.Response(http.StatusBadRequest, false, err.Error(), nil, nil)
